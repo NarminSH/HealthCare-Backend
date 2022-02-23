@@ -19,6 +19,7 @@ class Doctor(models.Model):
     #relations
     field = models.ForeignKey(WorkCategory, on_delete=models.CASCADE,
                 db_index=True, related_name='doctors')
+                
     first_name = models.CharField(max_length=50)
     surname = models.CharField(max_length=60)
     location = models.CharField(max_length=250, null=True)
@@ -38,7 +39,7 @@ class Appointment(models.Model):
                         db_index=True, related_name='appointments')
     patient = models.ForeignKey(Patient, on_delete=models.CASCADE, 
                         db_index=True, related_name='appointments', null=True)
-                        
+
     date = models.CharField(max_length=50, null=True)
 
     #moderations
