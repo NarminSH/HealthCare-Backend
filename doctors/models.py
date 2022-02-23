@@ -1,5 +1,5 @@
-from unicodedata import name
 from django.db import models
+from patients.models import Patient
 
 # Create your models here.
 
@@ -36,6 +36,9 @@ class Appointment(models.Model):
     #relations
     doctor = models.ForeignKey(Doctor, on_delete=models.CASCADE, 
                         db_index=True, related_name='appointments')
+    patient = models.ForeignKey(Patient, on_delete=models.CASCADE, 
+                        db_index=True, related_name='appointments', null=True)
+                        
     date = models.CharField(max_length=50, null=True)
 
     #moderations
