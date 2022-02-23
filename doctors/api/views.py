@@ -40,11 +40,13 @@ class DoctorAppointmentsAPIView(ListAPIView):
     serializer_class = AppointmentListSerializer
 
     def get(self, *args, **kwargs):
-            appointments = Appointment.objects.filter(patient=kwargs.get('pk'))
+            current_doctor = Doctor.objects.filter(id=kwargs.get('pk')).first()
+            appointments = Appointment.objects.filter(doctor=current_doctor)
             if not appointments:
                 return JsonResponse (data=[], status=200, safe=False)
+            print(appointments)
             serializer = AppointmentListSerializer(
-                appointments, context={'request': self.request})
+                appointments, many=True, context={'request': self.request} )
             return JsonResponse(data=serializer.data, safe=False)
 
 

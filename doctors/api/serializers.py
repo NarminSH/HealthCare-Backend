@@ -8,6 +8,7 @@ class DoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = (
+            'id',
             'first_name',
             'surname',
             'location',
@@ -35,7 +36,7 @@ class DoctorListSerializer(DoctorSerializer):
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
-        fields =(
+        fields = (
             'patient',
             'doctor',
             'date',
@@ -43,6 +44,7 @@ class AppointmentSerializer(serializers.ModelSerializer):
             'updated_at'
 
         )
+
 
 class AppointmentListSerializer(AppointmentSerializer):
     patient = PatientSerializer()
