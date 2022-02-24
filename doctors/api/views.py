@@ -2,6 +2,7 @@ from rest_framework.generics import (
     ListCreateAPIView,
     RetrieveUpdateDestroyAPIView,
     ListAPIView,
+    CreateAPIView
 )
 from django.http.response import JsonResponse
 from doctors.api.serializers import (
@@ -9,6 +10,7 @@ from doctors.api.serializers import (
     DoctorSerializer,
     WorkCategorySerializer,
     AppointmentListSerializer,
+    AppointmentSerializer
 )
 
 from doctors.models import Doctor, WorkCategory, Appointment
@@ -56,8 +58,14 @@ class DoctorAppointmentsAPIView(ListAPIView):
         return JsonResponse(data=serializer.data, safe=False)
 
 
-# class Appointments(CreateAPIView):
-#     queryset = Appointment.objects.all()
-#     serializer_class = AppointmentSerializer
+class AppointmentsAPIView(CreateAPIView):
+    queryset = Appointment.objects.all()
+    serializer_class = AppointmentSerializer
 
-#     def create(self, *args, **kwargs)
+    def post(self, *args, **kwargs):
+        appointment_data = self.request.data
+        serializer = AppointmentSerializer(data=appointment_data, context={
+                                            'request': self.request})
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return JsonResponse(data=serializer.data, safe=False, status=201)
