@@ -74,3 +74,15 @@ class AppointmentsAPIView(ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return JsonResponse(data=serializer.data, safe=False, status=201)
+
+
+
+class AppointmentAPIView(RetrieveUpdateDestroyAPIView):
+    serializer_class = AppointmentSerializer
+    queryset = Appointment.objects.all()
+    lookup_url_kwarg = "pk"
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return AppointmentListSerializer
+        return super(AppointmentAPIView, self).get_serializer_class()

@@ -4,6 +4,7 @@ from doctors.api.views import (
     DoctorAPIView,
     DoctorAppointmentsAPIView,
     AppointmentsAPIView,
+    AppointmentAPIView
 )
 
 app_name = "doctors_api"
@@ -17,4 +18,5 @@ urlpatterns = [
         name="doctor_appointments",
     ),
     path("appointments/", AppointmentsAPIView.as_view(), name="appointments"),
+    path("appointments/<int:pk>", AppointmentAPIView.as_view(), name="appointment"),
 ]
