@@ -21,7 +21,7 @@ class DoctorSerializer(serializers.ModelSerializer):
 class WorkCategorySerializer(serializers.ModelSerializer):
     class Meta:
         model = WorkCategory
-        fields = ("title", "created_at")
+        fields = ("id", "title", "created_at")
 
 
 class DoctorListSerializer(DoctorSerializer):
@@ -31,7 +31,7 @@ class DoctorListSerializer(DoctorSerializer):
 class AppointmentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Appointment
-        fields = ("patient", "doctor", "date", "created_at", "updated_at")
+        fields = ("id", "patient", "doctor", "date", "created_at", "updated_at")
 
 
 class AppointmentListSerializer(AppointmentSerializer):
