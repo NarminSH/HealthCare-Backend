@@ -4,6 +4,7 @@ from doctors.api.views import (
     DoctorsAPIView,
     DoctorAPIView,
     DoctorAppointmentsAPIView,
+    DoctorCommentsAPIView,
     AppointmentsAPIView,
     AppointmentAPIView
 )
@@ -21,4 +22,9 @@ urlpatterns = [
     path("appointments/", AppointmentsAPIView.as_view(), name="appointments"),
     path("appointments/<int:pk>", AppointmentAPIView.as_view(), name="appointment"),
     path("comments/", CommentsAPIView.as_view(), name="comments"),
+    path(
+        "doctors/<int:pk>/comments",
+        DoctorCommentsAPIView.as_view(),
+        name="doctor_comments",
+    ),
 ]

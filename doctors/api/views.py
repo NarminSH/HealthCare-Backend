@@ -108,3 +108,19 @@ class CommentsAPIView(ListCreateAPIView):
         serializer.is_valid(raise_exception=True)
         serializer.save()
         return JsonResponse(data=serializer.data, safe=False, status=201)
+
+
+class DoctorCommentsAPIView(ListAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentListSerializer
+
+    def get(self, *args, **kwargs):
+        current_doctor = Doctor.objects.filter(id=kwargs.get("pk")).first()
+        comments = Comment.objects.filter(doctor=current_doctor)
+        if not comments:
+            return JsonResponse(data=[], status=200, safe=False)
+        print(comments)
+        serializer = AppointmentListSerializer(
+            comments, many=True, context={"request": self.request}
+        )
+        return JsonResponse(data=serializer.data, safe=False)
