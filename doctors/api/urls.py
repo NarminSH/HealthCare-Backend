@@ -1,5 +1,6 @@
 from django.urls import path
 from doctors.api.views import (
+    CommentsAPIView,
     DoctorsAPIView,
     DoctorAPIView,
     DoctorAppointmentsAPIView,
@@ -19,4 +20,5 @@ urlpatterns = [
     ),
     path("appointments/", AppointmentsAPIView.as_view(), name="appointments"),
     path("appointments/<int:pk>", AppointmentAPIView.as_view(), name="appointment"),
+    path("comments/", CommentsAPIView.as_view(), name="comments"),
 ]

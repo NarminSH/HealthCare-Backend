@@ -45,6 +45,8 @@ INSTALLED_APPS = [
     'patients', 
     'rest_framework',
     "corsheaders",
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -130,6 +132,16 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
+
+CLOUDINARY_STORAGE = {
+             'CLOUD_NAME': 'dx0nnivhc',
+             'API_KEY': '912423343837937',
+             'API_SECRET': 'vElxONyzAzAmAsJYzxIXv5WpnPE'
+            }
+DEFAULT_FILE_STORAGE='cloudinary_storage.storage.MediaCloudinaryStorage'
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [

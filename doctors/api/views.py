@@ -5,6 +5,8 @@ from rest_framework.generics import (
 )
 from django.http.response import JsonResponse
 from doctors.api.serializers import (
+    CommentListSerializer,
+    CommentSerializer,
     DoctorListSerializer,
     DoctorSerializer,
     WorkCategorySerializer,
@@ -12,7 +14,7 @@ from doctors.api.serializers import (
     AppointmentSerializer,
 )
 
-from doctors.models import Doctor, WorkCategory, Appointment
+from doctors.models import Comment, Doctor, WorkCategory, Appointment
 
 
 class DoctorsAPIView(ListCreateAPIView):
@@ -86,3 +88,23 @@ class AppointmentAPIView(RetrieveUpdateDestroyAPIView):
         if self.request.method == "GET":
             return AppointmentListSerializer
         return super(AppointmentAPIView, self).get_serializer_class()
+
+
+
+class CommentsAPIView(ListCreateAPIView):
+    queryset = Comment.objects.all()
+    serializer_class = CommentSerializer
+
+    def get_serializer_class(self):
+        if self.request.method == "GET":
+            return CommentListSerializer
+        return super(CommentsAPIView, self).get_serializer_class()
+
+    def post(self, *args, **kwargs):
+        comment_data = self.request.data
+        serializer = CommentSerializer(
+            data=comment_data, context={"request": self.request}
+        )
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return JsonResponse(data=serializer.data, safe=False, status=201)
